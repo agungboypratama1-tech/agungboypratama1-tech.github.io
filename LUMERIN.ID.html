@@ -45,6 +45,14 @@ Lumerin.id
         
         #cart-sidebar { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         .menu-item-hidden { display: none !important; }
+        .animate-pulse-slow {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .7; }
+}
         
         @keyframes badgePop {
             0% { transform: scale(1); }
@@ -57,38 +65,61 @@ Lumerin.id
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #FFF8F6; }
         ::-webkit-scrollbar-thumb { background: #3E2723; border-radius: 10px; }
+        input, textarea {
+    outline: none;
+    transition: all 0.3s;
+}
+input:focus, textarea:focus {
+    border-color: #F59E0B !important;
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.1);
+}
+[id="payment-modal"].hidden {
+    display: none !important;
+}
+
+#global-overlay.hidden {
+    display: none !important;
+}
     </style>
 </head>
 <body class="selection:bg-cocoa-light selection:text-primary">
 <!-- Overlays -->
 <div class="fixed inset-0 bg-black/60 z-[60] hidden transition-opacity duration-300 opacity-0" id="global-overlay" onclick="closeAllModals()"></div>
 <!-- Payment Selection Modal -->
-<div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-md bg-white rounded-3xl z-[80] hidden p-8 cocoa-shadow" id="payment-modal">
-<div class="text-center mb-6">
-<h3 class="font-headline text-2xl font-bold text-primary mb-2">Pilih Metode Pembayaran</h3>
-<p class="text-stone-500 text-sm">Silakan pilih cara bayar yang paling nyaman untukmu</p>
-</div>
-<div class="grid grid-cols-1 gap-4">
-<button class="flex items-center gap-4 p-4 rounded-2xl border-2 border-stone-100 hover:border-accent transition-all text-left btn-press group" onclick="selectPayment('QRIS')">
-<div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center text-accent group-hover:bg-accent group-hover:text-white transition-colors">
-<span class="material-symbols-outlined">qr_code_2</span>
-</div>
-<div>
-<p class="font-bold text-primary">Bayar via QRIS</p>
-<p class="text-xs text-stone-500">Otomatis &amp; Praktis</p>
-</div>
-</button>
-<button class="flex items-center gap-4 p-4 rounded-2xl border-2 border-stone-100 hover:border-accent transition-all text-left btn-press group" onclick="selectPayment('COD')">
-<div class="w-12 h-12 rounded-full bg-stone-50 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-<span class="material-symbols-outlined">payments</span>
-</div>
-<div>
-<p class="font-bold text-primary">Bayar di Tempat (COD)</p>
-<p class="text-xs text-stone-500">Bayar saat pesanan tiba</p>
-</div>
-</button>
-</div>
-<button class="mt-6 w-full py-3 text-stone-400 font-bold hover:text-primary transition-colors" onclick="closeAllModals()">Batal</button>
+<div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-md bg-white rounded-3xl z-[80] hidden p-8 cocoa-shadow overflow-y-auto max-h-[90vh]" id="payment-modal">
+    <div class="text-center mb-6">
+        <h3 class="font-headline text-2xl font-bold text-primary mb-2">Data Pengiriman</h3>
+        <p class="text-stone-500 text-sm">Lengkapi data untuk memudahkan pengantaran</p>
+    </div>
+    
+    <div class="space-y-4 mb-6">
+        <input type="text" id="cust-name" placeholder="Nama Lengkap" class="w-full p-3 rounded-xl border border-stone-200 focus:ring-accent focus:border-accent outline-none">
+        <textarea id="cust-address" placeholder="Alamat Lengkap / Patokan" class="w-full p-3 rounded-xl border border-stone-200 focus:ring-accent focus:border-accent outline-none" rows="2"></textarea>
+    </div>
+
+    <div class="grid grid-cols-1 gap-4">
+        <button class="flex items-center gap-4 p-4 rounded-2xl border-2 border-stone-100 hover:border-accent transition-all text-left group" onclick="validateAndPay('QRIS')">
+            <div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center text-accent group-hover:bg-accent group-hover:text-white">
+                <span class="material-symbols-outlined">qr_code_2</span>
+            </div>
+            <div>
+                <p class="font-bold text-primary">Bayar via QRIS</p>
+                <p class="text-xs text-stone-500">Otomatis & Praktis</p>
+            </div>
+        </button>
+
+        <button class="flex items-center gap-4 p-4 rounded-2xl border-2 border-stone-100 hover:border-accent transition-all text-left group" onclick="validateAndPay('COD')">
+            <div class="w-12 h-12 rounded-full bg-stone-50 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white">
+                <span class="material-symbols-outlined">payments</span>
+            </div>
+            <div>
+                <p class="font-bold text-primary">Bayar di Tempat (COD)</p>
+                <p class="text-xs text-stone-500">Bayar saat pesanan tiba</p>
+            </div>
+        </button> </div> <button class="mt-6 w-full py-3 text-stone-400 font-bold hover:text-primary transition-colors" onclick="closeAllModals()">
+        Batal
+    </button>
+
 </div>
 <!-- QRIS Modal -->
 <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-md bg-white rounded-3xl z-[80] hidden p-8 cocoa-shadow text-center" id="qris-modal">
@@ -133,50 +164,67 @@ Lumerin.id
 </aside>
 <!-- TopAppBar -->
 <header class="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-stone-100">
-<div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
-<span class="material-symbols-outlined text-white">coffee</span>
-</div>
-<h1 class="font-headline text-2xl font-bold tracking-tight text-primary">Es Coklat Lumer</h1>
-</div>
-<nav class="hidden md:flex gap-10 items-center font-bold text-sm uppercase tracking-widest text-stone-600">
-<a class="hover:text-accent transition-colors" href="#menu">Menu</a>
-<a class="hover:text-accent transition-colors" href="#about">Tentang Kami</a>
-<a class="hover:text-accent transition-colors" href="#ratings">Ulasan</a>
-<button class="relative bg-stone-100 p-3 rounded-full hover:bg-accent hover:text-white transition-all btn-press" onclick="toggleCart()">
-<span class="material-symbols-outlined">shopping_cart</span>
-<span class="absolute -top-1 -right-1 bg-primary text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full border-2 border-white cart-badge" id="cart-count-desktop">0</span>
-</button>
-</nav>
-<div class="md:hidden flex items-center gap-4">
-<button class="relative p-2 text-primary" onclick="toggleCart()">
-<span class="material-symbols-outlined text-3xl">shopping_cart</span>
-<span class="absolute top-0 right-0 bg-accent text-primary text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold cart-badge" id="cart-count-mobile">0</span>
-</button>
-</div>
-</div>
+    <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+        <div class="flex items-center gap-3 group cursor-pointer" onclick="window.location.href='#'">
+            <img src="screen.png" alt="Lumerin Logo" 
+                 class="w-12 h-12 rounded-full object-cover border-2 border-accent shadow-sm">
+            <h1 class="font-headline text-2xl font-bold tracking-tight text-primary">LUMERIN.ID</h1>
+        </div>
+
+        <nav class="hidden md:flex gap-8 items-center font-bold text-[11px] uppercase tracking-widest text-stone-600">
+            <a class="hover:text-accent transition-colors" href="#menu">Menu</a>
+            <a class="hover:text-accent transition-colors" href="#about">Tentang Kami</a>
+            <a class="hover:text-accent transition-colors" href="#ratings">Ulasan</a>
+            <button class="relative bg-stone-100 p-3 rounded-full hover:bg-accent hover:text-white transition-all btn-press" onclick="toggleCart()">
+                <span class="material-symbols-outlined text-sm">shopping_cart</span>
+                <span class="absolute -top-1 -right-1 bg-primary text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full border-2 border-white cart-badge">0</span>
+            </button>
+        </nav>
+
+        <div class="md:hidden flex items-center">
+            <button class="relative p-2 text-primary" onclick="toggleCart()">
+                <span class="material-symbols-outlined text-3xl">shopping_cart</span>
+                <span class="absolute top-0 right-0 bg-accent text-primary text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold cart-badge">0</span>
+            </button>
+        </div>
+    </div>
 </header>
 <main>
-<!-- Hero Section -->
-<section class="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-primary">
-<div class="absolute inset-0 z-0">
-<img src="halamanhome2.jpeg" alt="">
-</div>
-<div class="relative z-10 text-center px-6 max-w-4xl">
-<span class="inline-block px-4 py-1 rounded-full bg-accent/20 text-accent font-bold text-xs uppercase tracking-[0.3em] mb-6">Established 2024</span>
-<h2 class="font-headline text-5xl md:text-7xl text-white mb-8 drop-shadow-2xl leading-tight">Sensasi Coklat<br/><span class="italic text-accent">Meleleh</span> Sempurna</h2>
-<p class="font-body text-lg md:text-xl text-white/80 mb-12 max-w-2xl mx-auto leading-relaxed">Nikmati kemewahan artisanal cocoa yang diolah dengan resep rahasia untuk pengalaman rasa yang tak terlupakan.</p>
-<div class="flex flex-col sm:flex-row gap-6 justify-center">
-<a class="bg-accent hover:bg-amber-600 text-primary px-10 py-5 rounded-full font-bold transition-all btn-press cocoa-shadow flex items-center justify-center gap-3 group" href="#menu">
+    <section class="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-primary">
+        <div class="absolute inset-0 z-0">
+            <img src="halamanhome2.jpeg" alt="" class="w-full h-full object-cover opacity-40"> 
+            <div class="absolute inset-0 bg-gradient-to-b from-primary/60 to-primary"></div>
+        </div>
+
+        <div class="relative z-10 text-center px-6 max-w-4xl">
+            <div class="mb-8 flex justify-center">
+                <img src="screen.png" alt="Logo Lumerin" 
+                     class="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover border-4 border-accent shadow-2xl animate-pulse-slow">
+            </div>
+
+            <span class="inline-block px-4 py-1 rounded-full bg-accent/20 text-accent font-bold text-xs uppercase tracking-[0.3em] mb-6">
+                Established 2026
+            </span>
+            
+            <h2 class="font-headline text-5xl md:text-7xl text-white mb-8 drop-shadow-2xl leading-tight">
+                Sensasi Coklat<br/><span class="italic text-accent">Meleleh</span> Sempurna
+            </h2>
+            
+            <p class="font-body text-lg md:text-xl text-white/80 mb-12 max-w-2xl mx-auto leading-relaxed">
+                Nikmati kemewahan artisanal cocoa yang diolah dengan resep rahasia untuk pengalaman rasa yang tak terlupakan.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                <a class="bg-accent hover:bg-amber-600 text-primary px-10 py-5 rounded-full font-bold transition-all btn-press cocoa-shadow flex items-center justify-center gap-3 group" href="#menu">
                     LIHAT MENU <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
-</a>
-<button class="bg-white/10 backdrop-blur-md border border-white/20 text-white px-10 py-5 rounded-full font-bold hover:bg-white/20 transition-all btn-press flex items-center justify-center gap-3" onclick="toggleCart()">
+                </a>
+                <button class="bg-white/10 backdrop-blur-md border border-white/20 text-white px-10 py-5 rounded-full font-bold hover:bg-white/20 transition-all btn-press flex items-center justify-center gap-3" onclick="toggleCart()">
                     KERANJANG <span class="material-symbols-outlined">local_mall</span>
-</button>
-</div>
-</div>
-</section>
+                </button>
+            </div>
+        </div>
+    </section>
+</main>
 <!-- Menu Section -->
 <section class="py-24" id="menu">
 <div class="max-w-7xl mx-auto px-6">
@@ -348,7 +396,7 @@ Lumerin.id
 </div>
 </div>
 <div class="pt-10 border-t border-stone-200 flex flex-col md:flex-row justify-between items-center gap-4 text-stone-400 text-xs">
-<p>© 2024 Es Coklat Lumer. All rights reserved.</p>
+<p>© 2026 UMERIN.ID. All rights reserved.</p>
 <div class="flex gap-6">
 <span>Terms of Service</span>
 <span>Cookie Policy</span>
@@ -398,23 +446,16 @@ Lumerin.id
     let cart = [];
     let activeFilter = 'all';
 
-    // --- Core Functions ---
+// --- Core Functions ---
     function initMenu() {
         const container = document.getElementById('menu-container');
         container.innerHTML = menuItems.map(item => `
-         <div class="menu-card glass-card rounded-3xl overflow-hidden cocoa-shadow flex flex-col group transition-all duration-500 hover:-translate-y-2 border border-white" 
-     data-category="${item.category}" data-name="${item.name}">
-    
-    <div class="h-56 overflow-hidden relative">
-        <img alt="${item.name}" 
-    class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" 
-    src="${item.img}"
-/>
-        />
-        
-        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-primary">
-            ${item.category}
-        </div>
+            <div class="menu-card glass-card rounded-3xl overflow-hidden cocoa-shadow flex flex-col group transition-all duration-500 hover:-translate-y-2 border border-white" 
+                 data-category="${item.category}" data-name="${item.name}">
+                <div class="h-56 overflow-hidden relative">
+                    <img alt="${item.name}" 
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                         src="${item.img}"/>
                     <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-primary">
                         ${item.category}
                     </div>
@@ -443,35 +484,45 @@ Lumerin.id
         } else {
             cart.push({ name, price, quantity: 1 });
         }
+        
         updateCartUI();
-        animateCartBadge();
+        showToast(name);
+
+        // Fitur Suara
+        const sound = document.getElementById('cart-sound');
+        if (sound) {
+            sound.currentTime = 0;
+            sound.play().catch(() => console.log("Klik layar dulu agar suara muncul"));
+        }
     }
 
     function updateCartUI() {
         const totalCount = cart.reduce((acc, item) => acc + item.quantity, 0);
         const totalPrice = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-        const formattedPrice = `Rp ${totalPrice.toLocaleString('id-ID')}`;
+        
+        document.querySelectorAll('.cart-badge').forEach(el => {
+            el.innerText = totalCount;
+            el.classList.add('animate-badge');
+            setTimeout(() => el.classList.remove('animate-badge'), 300);
+        });
 
-        document.querySelectorAll('.cart-badge').forEach(el => el.innerText = totalCount);
-        document.getElementById('cart-sidebar-total').innerText = formattedPrice;
-        document.getElementById('cart-item-count').innerText = `${totalCount} item(s) selected`;
+        document.getElementById('cart-sidebar-total').innerText = `Rp ${totalPrice.toLocaleString('id-ID')}`;
+        document.getElementById('cart-item-count').innerText = `${totalCount} items selected`;
 
         const cartList = document.getElementById('cart-items-list');
         if (cart.length === 0) {
-            cartList.innerHTML = `<div class="text-center py-24 text-stone-300">
-                <span class="material-symbols-outlined text-8xl mb-4 block">shopping_bag</span>
-                <p class="font-bold">Keranjangmu masih kosong</p></div>`;
+            cartList.innerHTML = `<div class="text-center py-24 text-stone-300"><span class="material-symbols-outlined text-8xl mb-4 block">shopping_bag</span><p class="font-bold">Keranjang kosong</p></div>`;
         } else {
             cartList.innerHTML = cart.map(item => `
-                <div class="flex items-center gap-4 bg-white p-4 rounded-2xl border border-stone-100 cocoa-shadow">
+                <div class="flex items-center gap-4 bg-white p-4 rounded-2xl border border-stone-100 shadow-sm">
                     <div class="flex-grow">
                         <h4 class="font-bold text-primary text-sm">${item.name}</h4>
-                        <p class="text-xs text-stone-400">Rp ${item.price.toLocaleString('id-ID')} / unit</p>
+                        <p class="text-xs text-stone-400">Rp ${item.price.toLocaleString('id-ID')}</p>
                     </div>
-                    <div class="flex items-center gap-3 bg-stone-50 rounded-xl p-1 border border-stone-100">
-                        <button onclick="removeFromCart('${item.name}')" class="w-8 h-8 rounded-lg flex items-center justify-center text-primary hover:bg-white hover:shadow-sm transition-all">-</button>
-                        <span class="font-bold text-sm w-4 text-center">${item.quantity}</span>
-                        <button onclick="addToCart('${item.name}', ${item.price})" class="w-8 h-8 rounded-lg flex items-center justify-center text-primary hover:bg-white hover:shadow-sm transition-all">+</button>
+                    <div class="flex items-center gap-2">
+                        <button onclick="removeFromCart('${item.name}')" class="w-8 h-8 rounded-lg bg-stone-100">-</button>
+                        <span class="text-sm font-bold">${item.quantity}</span>
+                        <button onclick="addToCart('${item.name}', ${item.price})" class="w-8 h-8 rounded-lg bg-stone-100">+</button>
                     </div>
                 </div>
             `).join('');
@@ -481,91 +532,97 @@ Lumerin.id
     function removeFromCart(name) {
         const index = cart.findIndex(item => item.name === name);
         if (index > -1) {
-            if (cart[index].quantity > 1) {
-                cart[index].quantity -= 1;
-            } else {
-                cart.splice(index, 1);
-            }
+            if (cart[index].quantity > 1) cart[index].quantity--;
+            else cart.splice(index, 1);
         }
         updateCartUI();
     }
 
-    // --- Modal Management ---
     function toggleCart() {
         const sidebar = document.getElementById('cart-sidebar');
         const overlay = document.getElementById('global-overlay');
-        const isOpen = !sidebar.classList.contains('translate-x-full');
-        
-        if (isOpen) {
-            sidebar.classList.add('translate-x-full');
-            overlay.classList.add('hidden');
-            overlay.classList.remove('opacity-100');
-            document.body.style.overflow = 'auto';
-        } else {
-            sidebar.classList.remove('translate-x-full');
-            overlay.classList.remove('hidden');
-            setTimeout(() => overlay.classList.add('opacity-100'), 10);
-            document.body.style.overflow = 'hidden';
-        }
+        sidebar.classList.toggle('translate-x-full');
+        overlay.classList.toggle('hidden');
+        overlay.classList.toggle('opacity-100');
+    }
+
+    function showToast(name) {
+        const toast = document.createElement('div');
+        toast.className = "fixed bottom-24 left-1/2 -translate-x-1/2 bg-primary text-white px-6 py-3 rounded-full shadow-2xl z-[100] text-sm font-bold animate-bounce";
+        toast.innerHTML = `✅ ${name} ditambahkan!`;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 2000);
     }
 
     function openPaymentSelection() {
-        if (cart.length === 0) {
-            alert('Ups! Keranjangmu masih kosong.');
-            return;
-        }
-        // Close cart sidebar first
-        document.getElementById('cart-sidebar').classList.add('translate-x-full');
-        // Open selection modal
+        if (cart.length === 0) return alert("Keranjang masih kosong!");
         document.getElementById('payment-modal').classList.remove('hidden');
         document.getElementById('global-overlay').classList.remove('hidden');
         document.getElementById('global-overlay').classList.add('opacity-100');
     }
 
-    function selectPayment(method) {
+    function closeAllModals() {
         document.getElementById('payment-modal').classList.add('hidden');
+        document.getElementById('qris-modal').classList.add('hidden');
+        document.getElementById('cart-sidebar').classList.add('translate-x-full');
+        document.getElementById('global-overlay').classList.add('hidden');
+        document.getElementById('global-overlay').classList.remove('opacity-100');
+    }
+
+    function validateAndPay(method) {
+        const name = document.getElementById('cust-name').value;
+        const address = document.getElementById('cust-address').value;
+        if (!name || !address) return alert("Isi data pengiriman dulu!");
+        
         if (method === 'QRIS') {
-            const totalPrice = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-            document.getElementById('qris-total-display').innerText = `Rp ${totalPrice.toLocaleString('id-ID')}`;
+            const total = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+            document.getElementById('qris-total-display').innerText = `Rp ${total.toLocaleString('id-ID')}`;
+            document.getElementById('payment-modal').classList.add('hidden');
             document.getElementById('qris-modal').classList.remove('hidden');
         } else {
             whatsappCheckout('COD');
         }
     }
 
-    function closeAllModals() {
-        document.getElementById('cart-sidebar').classList.add('translate-x-full');
-        document.getElementById('payment-modal').classList.add('hidden');
-        document.getElementById('qris-modal').classList.add('hidden');
-        document.getElementById('global-overlay').classList.add('opacity-100'); // Transition out
-        setTimeout(() => {
-            document.getElementById('global-overlay').classList.add('hidden');
-            document.getElementById('global-overlay').classList.remove('opacity-100');
-        }, 300);
-        document.body.style.overflow = 'auto';
-    }
+  function whatsappCheckout(method) {
+    const name = document.getElementById('cust-name').value;
+    const address = document.getElementById('cust-address').value;
+    const total = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+    
+    // Header Estetik
+    let msg = `*— NEW ORDER [LUMERIN.ID] —*\n`;
+    msg += `_Sensasi Coklat Meleleh Sempurna_\n\n`;
+    
+    msg += `*DETAIL PENGIRIMAN* 📍\n`;
+    msg += `Nama: ${name}\n`;
+    msg += `Alamat: ${address}\n`;
+    msg += `Metode: ${method}\n`;
+    msg += `\n*DAFTAR PESANAN* 🍫\n`;
+    
+    // Looping item dengan format subtotal rapi
+    cart.forEach((item, index) => {
+        const subtotal = item.price * item.quantity;
+        msg += `*${index + 1}. ${item.name}*\n`;
+        msg += `   Qty: ${item.quantity} x Rp ${item.price.toLocaleString('id-ID')}\n`;
+        msg += `   Subtotal: Rp ${subtotal.toLocaleString('id-ID')}\n\n`;
+    });
+    
+    // Footer Total
+    msg += `----------------------------\n`;
+    msg += `*TOTAL PESANAN: Rp ${total.toLocaleString('id-ID')}*\n`;
+    msg += `----------------------------\n\n`;
+    msg += `Mohon segera dikonfirmasi ya Min, terima kasih! ✨`;
 
-    function whatsappCheckout(method = 'COD') {
-        const phoneNumber = '+6285608063276';
-        let message = `*HALO ES COKLAT LUMER!*\nSaya ingin memesan menu premium berikut:\n\n`;
-        
-        cart.forEach((item, index) => {
-            message += `*${index + 1}. ${item.name}*\n   Qty: ${item.quantity} x Rp ${item.price.toLocaleString('id-ID')}\n   Subtotal: Rp ${(item.price * item.quantity).toLocaleString('id-ID')}\n\n`;
-        });
+    const phone = "6285608063276"; 
+    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+    
+    // Reset & Close
+    cart = [];
+    updateCartUI();
+    closeAllModals();
+}
 
-        const totalPrice = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-        message += `----------------------------\n*TOTAL PESANAN: Rp ${totalPrice.toLocaleString('id-ID')}*\n----------------------------\n\n*Metode Pembayaran:* ${method}\n\nMohon segera dikonfirmasi ya, terima kasih! 🍫✨`;
 
-        const encodedMessage = encodeURIComponent(message);
-        window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
-        
-        // Reset cart after checkout (optional but recommended)
-        cart = [];
-        updateCartUI();
-        closeAllModals();
-    }
-
-    // --- Filters ---
     function filterMenu(e, category) {
         activeFilter = category;
         document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active-btn'));
@@ -574,36 +631,27 @@ Lumerin.id
     }
 
     function applyCombinedFilters() {
-        const searchTerm = document.getElementById('menu-search').value.toLowerCase();
-        const cards = document.querySelectorAll('.menu-card');
-
-        cards.forEach(card => {
-            const category = card.getAttribute('data-category');
+        const search = document.getElementById('menu-search').value.toLowerCase();
+        document.querySelectorAll('.menu-card').forEach(card => {
+            const cat = card.getAttribute('data-category');
             const name = card.getAttribute('data-name').toLowerCase();
-            const matchesCategory = activeFilter === 'all' || category === activeFilter;
-            const matchesSearch = name.includes(searchTerm);
-            
-            if (matchesCategory && matchesSearch) {
-                card.classList.remove('menu-item-hidden');
-            } else {
-                card.classList.add('menu-item-hidden');
-            }
-        });
-    }
-
-    function animateCartBadge() {
-        document.querySelectorAll('.cart-badge').forEach(b => {
-            b.classList.add('animate-badge');
-            setTimeout(() => b.classList.remove('animate-badge'), 300);
+            const matchCat = activeFilter === 'all' || cat === activeFilter;
+            const matchSearch = name.includes(search);
+            card.style.display = (matchCat && matchSearch) ? 'flex' : 'none';
         });
     }
 
     function toggleFavorite(btn) {
-        const icon = btn.querySelector('span');
-        icon.classList.toggle('fill-1');
+        btn.querySelector('span').classList.toggle('fill-1');
     }
 
-    // Initialize
-    window.onload = initMenu;
+    window.onload = () => {
+        initMenu();
+        updateCartUI();
+    };
 </script>
-</body></html>
+
+<audio id="cart-sound" src="linhmitto-bellding-254774.mp3"></audio>
+
+</body>
+</html>
