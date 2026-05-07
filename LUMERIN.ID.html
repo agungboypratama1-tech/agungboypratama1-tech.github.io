@@ -274,7 +274,7 @@ input:focus, textarea:focus {
 <a class="inline-flex items-center gap-3 text-accent font-bold group" href="#menu">
     Eksplor Menu Kami 
 </a>
-</div> <!-- TUTUP TEXT KIRI -->
+</div> 
 
 <div class="relative group lg:order-2">
     <div class="absolute inset-0 border-2 border-accent/30 rounded-[3rem] translate-x-4 translate-y-4 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform"></div>
@@ -284,7 +284,7 @@ input:focus, textarea:focus {
      alt="Tentang Kami">
 </div>
 
-</div> <!-- 🔥 INI TAMBAHAN PENTING -->
+</div> 
 </section>
 <!-- Testimonials -->
 <section class="py-24 bg-white" id="ratings">
@@ -388,37 +388,104 @@ input:focus, textarea:focus {
 <li><a class="hover:text-accent transition-colors" href="#">Kebijakan Privasi</a></li>
 </ul>
 </div>
-<div>
-<h5 class="font-bold text-primary mb-6 uppercase tracking-widest text-xs">Contact Us</h5>
-<p class="text-stone-500 text-sm mb-4"><p>Jember,Sumberbaru,Rowotengah</p>
-<p class="text-stone-500 text-sm mb-4">085608063276</p>
-<button class="text-accent font-bold text-sm underline" onclick="whatsappCheckout()">Pesan Sekarang via WA</button>
-</div>
-</div>
-<div class="pt-10 border-t border-stone-200 flex flex-col md:flex-row justify-between items-center gap-4 text-stone-400 text-xs">
-<p>© 2026 UMERIN.ID. All rights reserved.</p>
-<div class="flex gap-6">
-<span>Terms of Service</span>
-<span>Cookie Policy</span>
-</div>
-</div>
-</div>
+<footer class="bg-stone-50 pt-20 pb-24 border-t border-stone-200">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
+            
+            <div class="col-span-1 md:col-span-2">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-sm">coffee</span>
+                    </div>
+                    <h4 class="font-headline text-2xl font-bold text-primary">LUMERIN.ID</h4>
+                </div>
+                <p class="text-stone-500 max-w-sm mb-8 leading-relaxed">
+                    Menyajikan kebahagiaan dalam satu gelas coklat premium sejak 2026. Kami hadir untuk melumerkan harimu.
+                </p>
+
+                <div class="flex flex-col gap-4">
+                    <div class="flex items-center gap-4 bg-white p-4 rounded-2xl border border-stone-100 w-fit shadow-sm">
+                        <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                            <span class="material-symbols-outlined">location_on</span>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-stone-400 uppercase font-bold tracking-tighter">Lokasi Kami</p>
+                            <p class="text-sm font-bold text-primary">Rowotengah, Jember</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-4 bg-white p-4 rounded-2xl border border-stone-100 w-fit shadow-sm">
+                        <div class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center text-accent">
+                            <span class="material-symbols-outlined">group</span>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-stone-400 uppercase font-bold tracking-tighter">Total Pengunjung</p>
+                            <p class="text-xl font-headline font-bold text-primary" id="angka-pengunjung-asli">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h5 class="font-bold text-primary mb-6 uppercase tracking-widest text-xs">Quick Links</h5>
+                <ul class="space-y-4 text-stone-500 text-sm">
+                    <li><a class="hover:text-accent transition-colors" href="#menu">Menu Favorit</a></li>
+                    <li><a class="hover:text-accent transition-colors" href="#about">Cerita Kami</a></li>
+                    <li><a class="hover:text-accent transition-colors" href="#ratings">Ulasan Pelanggan</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h5 class="font-bold text-primary mb-6 uppercase tracking-widest text-xs">Contact Us</h5>
+                <div class="text-stone-500 text-sm space-y-2 mb-6">
+                    <p>Jember, Sumberbaru, Rowotengah</p>
+                    <p class="font-bold text-primary text-base">085608063276</p>
+                </div>
+                <button class="text-accent font-bold text-sm underline hover:text-primary transition-all" onclick="whatsappCheckout()">
+                    Pesan Sekarang via WA
+                </button>
+            </div>
+        </div>
+
+        <div class="pt-10 border-t border-stone-200 flex flex-col md:flex-row justify-between items-center gap-4 text-stone-400 text-xs">
+            <p>© 2026 LUMERIN.ID. All rights reserved.</p>
+            <div class="flex gap-6">
+                <span>Terms of Service</span>
+                <span>Cookie Policy</span>
+            </div>
+        </div>
+    </div>
 </footer>
-<!-- Bottom Navigation (Mobile) -->
-<nav class="md:hidden fixed bottom-0 left-0 w-full bg-white/90 backdrop-blur-md border-t border-stone-100 flex justify-around items-center h-20 px-4 z-50 rounded-t-3xl shadow-[0_-10px_30px_rgba(0,0,0,0.05)]">
-<a class="flex flex-col items-center gap-1 text-stone-400 hover:text-primary" href="#menu">
-<span class="material-symbols-outlined">restaurant_menu</span>
-<span class="text-[10px] font-bold">Menu</span>
-</a>
-<button class="relative bg-primary text-white p-4 rounded-2xl -translate-y-6 shadow-xl shadow-primary/30 btn-press" onclick="toggleCart()">
-<span class="material-symbols-outlined text-3xl">shopping_basket</span>
-<span class="absolute -top-1 -right-1 bg-accent text-primary text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-black border-2 border-primary cart-badge">0</span>
-</button>
-<a class="flex flex-col items-center gap-1 text-stone-400 hover:text-primary" href="#about">
-<span class="material-symbols-outlined">auto_stories</span>
-<span class="text-[10px] font-bold">About</span>
-</a>
-</nav>
+
+<script>
+    function updateVisitorCounter() {
+        const display = document.getElementById('angka-pengunjung-asli');
+        if (!display) return;
+
+        const baseView = 1250; // Angka awal agar terlihat ramai
+        let visits = localStorage.getItem('lumerin_visitor_count') || 0;
+        visits = parseInt(visits) + 1;
+        localStorage.setItem('lumerin_visitor_count', visits);
+
+        const target = baseView + visits;
+        let current = 0;
+        
+        const counter = setInterval(() => {
+            current += Math.ceil(target / 50);
+            if (current >= target) {
+                display.innerText = target.toLocaleString('id-ID');
+                clearInterval(counter);
+            } else {
+                display.innerText = current.toLocaleString('id-ID');
+            }
+        }, 30);
+    }
+
+    // Panggil fungsi ini saat halaman dimuat
+    window.addEventListener('DOMContentLoaded', () => {
+        updateVisitorCounter();
+    });
+</script>
 <script>
     // --- Data ---
     const  menuItems = [
@@ -649,6 +716,48 @@ input:focus, textarea:focus {
         initMenu();
         updateCartUI();
     };
+    // --- Fungsi Counter Pengunjung ---
+function jalankanCounterPengunjung() {
+    const display = document.getElementById('angka-pengunjung-asli');
+    if (!display) return;
+
+    // Angka awal agar website terlihat sudah ramai
+    const angkaDasar = 0; 
+    
+    // Mengambil data dari local storage (memori browser)
+    let kunjungan = localStorage.getItem('lumerin_hits') || 0;
+    kunjungan = parseInt(kunjungan) + 1;
+    
+    // Simpan kembali data terbaru
+    localStorage.setItem('lumerin_hits', kunjungan);
+    
+    const totalTarget = angkaDasar + kunjungan;
+    let angkaSekarang = 0;
+    
+    // Efek animasi angka berjalan (counting up)
+    const durasi = 2000; // 2 detik
+    const interval = 30;
+    const step = totalTarget / (durasi / interval);
+
+    const animasi = setInterval(() => {
+        angkaSekarang += step;
+        if (angkaSekarang >= totalTarget) {
+            display.innerText = totalTarget.toLocaleString('id-ID');
+            clearInterval(animasi);
+        } else {
+            display.innerText = Math.floor(angkaSekarang).toLocaleString('id-ID');
+        }
+    }, interval);
+}
+
+// Panggil fungsi ini saat halaman dimuat
+window.addEventListener('DOMContentLoaded', () => {
+    // Panggil fungsi initMenu() anda yang lama di sini
+    if (typeof initMenu === "function") initMenu();
+    
+    // Jalankan counter pengunjung
+    jalankanCounterPengunjung();
+});
 </script>
 
 <audio id="cart-sound" src="linhmitto-bellding-254774.mp3"></audio>
