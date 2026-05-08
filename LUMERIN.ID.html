@@ -230,7 +230,7 @@ input:focus, textarea:focus {
 <div class="max-w-7xl mx-auto px-6">
 <div class="flex flex-col lg:flex-row justify-between items-end mb-16 gap-8">
 <div class="max-w-xl">
-<span class="text-accent font-bold uppercase tracking-widest mb-4 block">Our Curated Collection</span>
+<span class="text-accent font-bold uppercase tracking-widest mb-4 block">koleksi pilihan kami</span>
 <h3 class="font-headline text-4xl md:text-5xl text-primary">Pilih Varian Favoritmu</h3>
 </div>
 <div class="flex flex-col md:flex-row gap-4 w-full lg:w-auto">
@@ -240,11 +240,11 @@ input:focus, textarea:focus {
 </div>
 <div class="flex overflow-x-auto pb-2 md:pb-0 gap-2 no-scrollbar" id="filter-buttons">
 <button class="filter-btn active-btn whitespace-nowrap bg-white border border-stone-200 text-primary px-6 py-3 rounded-2xl font-bold transition-all btn-press" onclick="filterMenu(event, 'all')">Semua</button>
-<button class="filter-btn whitespace-nowrap bg-white border border-stone-200 text-primary px-6 py-3 rounded-2xl font-bold transition-all btn-press" onclick="filterMenu(event, 'classic')">Classic</button>
+<button class="filter-btn whitespace-nowrap bg-white border border-stone-200 text-primary px-6 py-3 rounded-2xl font-bold transition-all btn-press" onclick="filterMenu(event, 'klasik')">klasik</button>
 <button class="filter-btn whitespace-nowrap bg-white border border-stone-200 text-primary px-6 py-3 rounded-2xl font-bold transition-all btn-press" onclick="filterMenu(event, 'gelato')">Gelato</button>
-<button class="filter-btn whitespace-nowrap bg-white border border-stone-200 text-primary px-6 py-3 rounded-2xl font-bold transition-all btn-press" onclick="filterMenu(event, 'milky')">Milky</button>
-<button class="filter-btn whitespace-nowrap bg-white border border-stone-200 text-primary px-6 py-3 rounded-2xl font-bold transition-all btn-press" onclick="filterMenu(event, 'snacks')">Snacks</button>
-<button class="filter-btn whitespace-nowrap bg-white border border-stone-200 text-primary px-6 py-3 rounded-2xl font-bold transition-all btn-press" onclick="filterMenu(event, 'toppings')">Toppings</button>
+<button class="filter-btn whitespace-nowrap bg-white border border-stone-200 text-primary px-6 py-3 rounded-2xl font-bold transition-all btn-press" onclick="filterMenu(event, 'susu')">susu</button>
+<button class="filter-btn whitespace-nowrap bg-white border border-stone-200 text-primary px-6 py-3 rounded-2xl font-bold transition-all btn-press" onclick="filterMenu(event, 'cemilan')">cemilan</button>
+<button class="filter-btn whitespace-nowrap bg-white border border-stone-200 text-primary px-6 py-3 rounded-2xl font-bold transition-all btn-press" onclick="filterMenu(event, 'topping')">Topping</button>
 </div>
 </div>
 </div>
@@ -425,28 +425,6 @@ input:focus, textarea:focus {
                     </div>
                 </div>
             </div>
-
-            <div>
-                <h5 class="font-bold text-primary mb-6 uppercase tracking-widest text-xs">Quick Links</h5>
-                <ul class="space-y-4 text-stone-500 text-sm">
-                    <li><a class="hover:text-accent transition-colors" href="#menu">Menu Favorit</a></li>
-                    <li><a class="hover:text-accent transition-colors" href="#about">Cerita Kami</a></li>
-                    <li><a class="hover:text-accent transition-colors" href="#ratings">Ulasan Pelanggan</a></li>
-                </ul>
-            </div>
-
-            <div>
-                <h5 class="font-bold text-primary mb-6 uppercase tracking-widest text-xs">Contact Us</h5>
-                <div class="text-stone-500 text-sm space-y-2 mb-6">
-                    <p>Jember, Sumberbaru, Rowotengah</p>
-                    <p class="font-bold text-primary text-base">085608063276</p>
-                </div>
-                <button class="text-accent font-bold text-sm underline hover:text-primary transition-all" onclick="whatsappCheckout()">
-                    Pesan Sekarang via WA
-                </button>
-            </div>
-        </div>
-
         <div class="pt-10 border-t border-stone-200 flex flex-col md:flex-row justify-between items-center gap-4 text-stone-400 text-xs">
             <p>© 2026 LUMERIN.ID. All rights reserved.</p>
             <div class="flex gap-6">
@@ -462,7 +440,7 @@ input:focus, textarea:focus {
         const display = document.getElementById('angka-pengunjung-asli');
         if (!display) return;
 
-        const baseView = 1250; // Angka awal agar terlihat ramai
+        const baseView = 1250; 
         let visits = localStorage.getItem('lumerin_visitor_count') || 0;
         visits = parseInt(visits) + 1;
         localStorage.setItem('lumerin_visitor_count', visits);
@@ -481,7 +459,6 @@ input:focus, textarea:focus {
         }, 30);
     }
 
-    // Panggil fungsi ini saat halaman dimuat
     window.addEventListener('DOMContentLoaded', () => {
         updateVisitorCounter();
     });
@@ -513,7 +490,6 @@ input:focus, textarea:focus {
     let cart = [];
     let activeFilter = 'all';
 
-// --- Core Functions ---
     function initMenu() {
         const container = document.getElementById('menu-container');
         container.innerHTML = menuItems.map(item => `
@@ -555,8 +531,7 @@ input:focus, textarea:focus {
         updateCartUI();
         showToast(name);
 
-        // Fitur Suara
-        const sound = document.getElementById('cart-sound');
+             const sound = document.getElementById('cart-sound');
         if (sound) {
             sound.currentTime = 0;
             sound.play().catch(() => console.log("Klik layar dulu agar suara muncul"));
@@ -656,7 +631,6 @@ input:focus, textarea:focus {
     const address = document.getElementById('cust-address').value;
     const total = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
     
-    // Header Estetik
     let msg = `*— NEW ORDER [LUMERIN.ID] —*\n`;
     msg += `_Sensasi Coklat Meleleh Sempurna_\n\n`;
     
@@ -666,7 +640,6 @@ input:focus, textarea:focus {
     msg += `Metode: ${method}\n`;
     msg += `\n*DAFTAR PESANAN* 🍫\n`;
     
-    // Looping item dengan format subtotal rapi
     cart.forEach((item, index) => {
         const subtotal = item.price * item.quantity;
         msg += `*${index + 1}. ${item.name}*\n`;
@@ -674,7 +647,6 @@ input:focus, textarea:focus {
         msg += `   Subtotal: Rp ${subtotal.toLocaleString('id-ID')}\n\n`;
     });
     
-    // Footer Total
     msg += `----------------------------\n`;
     msg += `*TOTAL PESANAN: Rp ${total.toLocaleString('id-ID')}*\n`;
     msg += `----------------------------\n\n`;
@@ -682,8 +654,7 @@ input:focus, textarea:focus {
 
     const phone = "6285608063276"; 
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
-    
-    // Reset & Close
+
     cart = [];
     updateCartUI();
     closeAllModals();
@@ -716,27 +687,21 @@ input:focus, textarea:focus {
         initMenu();
         updateCartUI();
     };
-    // --- Fungsi Counter Pengunjung ---
 function jalankanCounterPengunjung() {
     const display = document.getElementById('angka-pengunjung-asli');
     if (!display) return;
 
-    // Angka awal agar website terlihat sudah ramai
     const angkaDasar = 0; 
     
-    // Mengambil data dari local storage (memori browser)
     let kunjungan = localStorage.getItem('lumerin_hits') || 0;
     kunjungan = parseInt(kunjungan) + 1;
     
-    // Simpan kembali data terbaru
     localStorage.setItem('lumerin_hits', kunjungan);
     
     const totalTarget = angkaDasar + kunjungan;
     let angkaSekarang = 0;
     
-    // Efek animasi angka berjalan (counting up)
-    const durasi = 2000; // 2 detik
-    const interval = 30;
+    const durasi = 2000; // 
     const step = totalTarget / (durasi / interval);
 
     const animasi = setInterval(() => {
@@ -750,9 +715,7 @@ function jalankanCounterPengunjung() {
     }, interval);
 }
 
-// Panggil fungsi ini saat halaman dimuat
 window.addEventListener('DOMContentLoaded', () => {
-    // Panggil fungsi initMenu() anda yang lama di sini
     if (typeof initMenu === "function") initMenu();
     
     // Jalankan counter pengunjung
